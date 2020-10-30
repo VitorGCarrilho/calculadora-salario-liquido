@@ -5,7 +5,7 @@ export class Irrf {
         this.inssDeduction = inssDeduction
     }
 
-    getIrrfDeduction = function () {
+    getIrrfDeduction = () => {
         const calculationBase = this.getCalculationBase();
         const aliquot = this.findIrrfAliquot(calculationBase);
         const irrf = calculationBase * (aliquot.percentage / 100) - aliquot.deduction;
@@ -15,18 +15,18 @@ export class Irrf {
         }
     }
 
-    getCalculationBase = function () {
+    getCalculationBase = () => {
         return this.grossSalary - this.inssDeduction.value - 0 - this.dependent * 189.59;
     }
 
-    findIrrfAliquot = function (calculationBase) {
+    findIrrfAliquot = (calculationBase) => {
         const irrfAliquot = this.getIrrfAliquot();
         const aliquot = irrfAliquot.base.filter(b => b.min <= calculationBase && b.max >= calculationBase)[0];
         return aliquot;
     }
 
 
-    getIrrfAliquot = function () {
+    getIrrfAliquot = () => {
         return {
             base: [
                 {
