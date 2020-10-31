@@ -4,7 +4,7 @@ export class Inss {
         this.grossSalary = grossSalary;
     }
 
-    getInssDeduction = function () {
+    getInssDeduction = () => {
         const inssBase = this.getInssBase();
         const percentage = this.getInssPercentage(inssBase)
         const inssToPay = this.calculateInssToPay(percentage, inssBase.maxValue)
@@ -14,12 +14,12 @@ export class Inss {
         }
     }
 
-    calculateInssToPay = function (percentage, maxValue) {
+    calculateInssToPay = (percentage, maxValue) => {
         let inssToPay = this.grossSalary * (percentage / 100);
         return inssToPay > maxValue ? maxValue : inssToPay;
     }
 
-    getInssPercentage = function (inssBase) {
+    getInssPercentage = (inssBase) => {
         let percentage;
         inssBase.base.forEach(b => {
             if (b.min <= this.grossSalary && b.max >= this.grossSalary) {
@@ -29,7 +29,7 @@ export class Inss {
         return percentage;
     }
 
-    getInssBase = function () {
+    getInssBase = () => {
         return {
             maxValue: 713.1,
             base: [

@@ -1,5 +1,5 @@
 export class NetSalaryService{
-    getDeductions = function(inssObj, irrfObj) {
+    getDeductions = (inssObj, irrfObj) => {
         const inss = inssObj.getInssDeduction();
         const irrf = irrfObj.getIrrfDeduction();
         return {
@@ -9,7 +9,7 @@ export class NetSalaryService{
         }
     }
 
-    validate = function(grossSalary, dependent) {
+    validate = (grossSalary, dependent) => {
         const messages = this.findErrors(grossSalary, dependent);
         const alertDiv = document.getElementById('alert-div');
         alertDiv.innerHTML = '';
@@ -19,7 +19,7 @@ export class NetSalaryService{
         }
     }
 
-    findErrors = function(grossSalary, dependent) {
+    findErrors = (grossSalary, dependent) => {
         const messages = [];
     
         if (isNaN(grossSalary)) {

@@ -26,7 +26,7 @@ export class NetSalaryController {
     
         const deductions = service.getDeductions(inss, irrf);
     
-        view.showResult(deductions);
+        view.showResult(deductions, true);
     
     }
 }

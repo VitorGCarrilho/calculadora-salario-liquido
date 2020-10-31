@@ -1,74 +1,112 @@
 <html>
-<header>
-    <title>Salario Liquido</title>
+<head>
+    <title>Salário Líquido</title>
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-        crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/stylesheet.css">
     <!-- <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css"> -->
 
-</header>
+</head>
 
-<body>
+<body style="background-color: #ecf0f1">
     <div class="container">
-        <h1>Cálculo Salário Líquido</h1>
 
-        <p>Cálculo que mostra o salário liquido dado um salário bruto.</p>
-
-        <div id="alert-div"></div>
-
-
-
-        <div class="panel panel-default">
-
-            <div class="panel-body">
-
-                <form>
-                    <div class="form-group row">
-                        <label for="inputSalary" class="col-sm-12 col-md-12 col-form-label">Salario Bruto:</label>
-                        <div class="col-sm-12 col-md-12">
-                            <input class="form-control" id="inputSalary" placeholder="Salario" data-val-number="The field Salário Bruto must be a number."
-                                value="1045.00" />
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="inputDependent" class="col-sm-12 col-md-12 col-form-label">Numero de dependentes:</label>
-                        <div class="col-sm-12 col-md-12">
-                            <input class="form-control" id="inputDependent" placeholder="Dependentes" value="0" />
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary col-sm-12" id="submit">Calcular</button>
-                </form>
-
-
+        <div class="row p-5">
+            <div class="col-12 text-center">
+                <h1 class="font-weight-bold">Cálculo Salário Líquido</h1>
+                <p class="lead">Cálculo que mostra o salário liquido dado um salário bruto.</p>
             </div>
         </div>
 
-        <br />
+        <div class="row justify-content-center">
 
-        <table class="table" id="result-table">
-            <thead id="table-header">
-                <tr id="row-header"></tr>
-            </thead>
-            <tbody id="table-body"></tbody>
-        </table>
+            <div class="col-lg-8 col-12">
 
+                <div class="card">
+
+                    <div class="card-body p-5">
+
+                        <form>
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <label for="inputSalary" class="mb-0">Salário Bruto:</label>
+                                </div>
+                                <div class="col-12 md-form">
+                                    <input type="number" min="0" class="form-control" id="inputSalary" placeholder="Salario" data-val-number="The field Salário Bruto must be a number."
+                                        value="1045.00" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <label for="inputDependent" class="mb-0">Número de dependentes:</label>
+                                </div>
+                                <div class="col-12 md-form">
+                                    <input type="number" min="0" class="form-control" id="inputDependent" placeholder="Dependentes" value="0" />
+                                </div>
+                            </div>
+                            <button type="submit" data-toggle="modal" data-target="#resultModal" class="btn btn-primary btn-block" id="submit"><i class="fas fa-check"></i> Calcular</button>
+
+                        </form>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-info text-white">
+                                        <h5 class="modal-title" id="exampleModalLabel">Resultado</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true" class="text-white">
+                                                <i class="fas fa-times"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div id="alert-div"></div>
+                                        <table class="table" id="result-table">
+                                            <thead id="table-header">
+                                                <tr id="row-header"></tr>
+                                            </thead>
+                                            <tbody id="table-body"></tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal-body text-center d-none" id="loader">
+                                        <i class="fas fa-spinner fa-pulse fa-2x"></i>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
     </div>
 
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+
+    <script src="js/app.js" type="module"></script>
+
 </body>
-
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-    crossorigin="anonymous"></script>
-
-<script src="js/app.js" type="module"></script>
-
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<!-- <script src="js/bootstrap/bootstrap.min.js"></script> -->
 
 </html>

@@ -5,40 +5,50 @@ export class NetSalaryView {
     }
 
 
-    clearPreviewResult = function () {
+    clearPreviewResult = () => {
         document.getElementById("row-header").innerHTML = "";
         document.getElementById("table-body").innerHTML = ""
     }
 
-    showResult = function (deductions) {
+    showResult = (deductions, withLoader = true) => {
         this.showHeader("Evento", "Ref.", "Proventos", "Descontos");
-        this.showBody(deductions);
+
+        if(withLoader) {
+            this.toggleLoader();
+
+            setTimeout(() => {
+                this.toggleLoader();
+                this.showTable(deductions);
+            }, 1000);
+
+            return;
+        }
+
+        this.showTable(deductions);
     }
 
-    showHeader = function (...headerColumns) {
+    showHeader = (...headerColumns) => {
         const header = document.getElementById("row-header");
         headerColumns.forEach(headerColumn => this.addTableElement(header, "TH", "col", headerColumn));
     }
-
-    showBody = function (deductions) {
+    
+    showTable = (deductions) => {
         const body = document.getElementById("table-body");
         this.addTableLine(body, "Salário Bruto", "-", `R$ ${deductions.grossSalary.toFixed(2)}`, "-");
         this.addTableLine(body, "INSS", `${deductions.inss.percentage}%`, "-", `R$ ${deductions.inss.value.toFixed(2)}`);
         this.addTableLine(body, "IRRF", `${deductions.irrf.percentage}%`, "-", `R$ ${deductions.irrf.value.toFixed(2)}`);
         this.addTableLine(body, "Totais", "-", `R$ ${deductions.grossSalary}`, `R$ ${(deductions.inss.value + deductions.irrf.value).toFixed(2)}`);
         this.addTableLine(body, "Salario Liquido", "", "", `R$ ${(deductions.grossSalary - (deductions.inss.value + deductions.irrf.value)).toFixed(2)}`);
-
     }
 
-    addTableLine = function (body, rowHeader, ...tableDataText) {
+    addTableLine = (body, rowHeader, ...tableDataText) => {
         const row = document.createElement("tr");
         this.addTableElement(row, "TH", "row", rowHeader);
         tableDataText.forEach(text => this.addTableElement(row, "TD", null, text))
         body.appendChild(row);
     }
 
-
-    addTableElement = function (row, element, scope, text) {
+    addTableElement = (row, element, scope, text) => {
         const tableElement = document.createElement(element);
         const textNode = document.createTextNode(text);
         if (scope) {
@@ -48,7 +58,7 @@ export class NetSalaryView {
         row.appendChild(tableElement);
     }
 
-    createAlert = function(message) {
+    createAlert = (message) => {
         const alertDiv = document.getElementById('alert-div');
     
         const div = document.createElement("DIV");
@@ -72,6 +82,29 @@ export class NetSalaryView {
         div.appendChild(button);
         button.appendChild(span);
         alertDiv.appendChild(div);
+    }
+
+    toggleLoader = () => {
+        const element = this.showHideLoaderElement();
+        const { loaderClass } = element;
+        const { loaderIsHide } = element;
+        const { loaderElement } = element;
+
+        if(loaderIsHide) {
+            loaderElement.classList.remove(loaderClass);
+            return;
+        }
+        if(!loaderIsHide) {
+            loaderElement.classList.add(loaderClass);
+            return;
+        }
+    }
+    
+    showHideLoaderElement = () => {
+        const loaderClass = "d-none";
+        const loaderElement = document.getElementById("loader");
+        const loaderIsHide = loaderElement.classList.contains(loaderClass);
+        return { loaderElement , loaderClass, loaderIsHide };
     }
 
 }
