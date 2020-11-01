@@ -7,7 +7,11 @@ export class NetSalaryController {
     submit(e) {
         e.preventDefault();
     
-        const grossSalary = document.getElementById('inputSalary').value;
+        const grossSalary = document.getElementById('inputSalary')
+            .value
+            .replace('R$ ', '')
+            .replace('.','')
+            .replace(',','.');
         const dependent = document.getElementById('inputDependent').value;
     
         const view = new NetSalaryView();
